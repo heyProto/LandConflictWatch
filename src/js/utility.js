@@ -15,9 +15,11 @@ function highlightCircle(name, data) {
     // remove highlight of previous circle
     for (let j = 0; j < allCircles.length; j++) {
         allCircles[j].r.baseVal.value = 4
+        // allCircles[j].setAttribute("stroke", "#FAA10C")
     }
     for (let i = 0; i < getCircles.length; i++) {
         getCircles[i].r.baseVal.value = 6
+        // allCircles[i].setAttribute("stroke", "black")
     }
 }
 

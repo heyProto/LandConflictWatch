@@ -10,7 +10,8 @@ ProtoGraph.initDataApp = function () {
         topoURL: 'https://duxxuzyhk2mdg.cloudfront.net/data/india-topo.json',
         chartOptions: {
             height: 700,
-            defaultCircleColor: ProtoGraph.site['house_colour']
+            defaultCircleColor: ProtoGraph.site['house_colour'],
+            selectedTab: 'no_of_people_affected'
         },
         filterConfigurationJSON: {
             colors: {

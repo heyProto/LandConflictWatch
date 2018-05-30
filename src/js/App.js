@@ -367,7 +367,7 @@ class App extends React.Component {
                 <div className="single-tab" id='list-tab' data-href='#list-area'>LIST</div>
               </div>
               <div className="tabs map-area active-area" id='map-area'>
-                <div className="map-hint-text">Click on the circle to see details of the incident</div>
+                <div className="map-hint-text">Click on the circle to see details of the conflict</div>
                 <Map
                   dataJSON={this.state.filteredDataJSON}
                   topoJSON={this.state.topoJSON}
