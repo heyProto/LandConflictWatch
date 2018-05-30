@@ -31,18 +31,18 @@ ProtoGraph.initDataApp = function () {
                 "alias": "State",
                 "propName": "state"
             },
-            {
-                "alias": "Number of people affected",
-                "propName": "no_of_people_affected"
-            },
-            {
-                "alias": "Land area affected (in ha)",
-                "propName": "land_area_affected"
-            },
-            {
-                "alias": "Investment (in crores Rs.)",
-                "propName": "investments"
-            },
+            // {
+            //     "alias": "Number of people affected",
+            //     "propName": "no_of_people_affected"
+            // },
+            // {
+            //     "alias": "Land area affected (in ha)",
+            //     "propName": "land_area_affected"
+            // },
+            // {
+            //     "alias": "Investment (in crores Rs.)",
+            //     "propName": "investments"
+            // },
             {
                 "alias": "Sector/ Type of industry",
                 "propName": "type_of_industry"
