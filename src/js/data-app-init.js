@@ -28,6 +28,10 @@ ProtoGraph.initDataApp = function () {
                 "propName": "year"
             },
             {
+                "alias": "State",
+                "propName": "state"
+            },
+            {
                 "alias": "Number of people affected",
                 "propName": "no_of_people_affected"
             },
