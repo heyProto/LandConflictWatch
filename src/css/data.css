@@ -127,7 +127,7 @@
 
 .tabs-area {
   border-bottom: 1px solid #efefef;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .single-tab {
@@ -136,21 +136,21 @@
   border-bottom: 3px solid white;
   display: inline-block;
   padding: 12px 25px 12px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .active-tab {
   color:#FAA10C;
-  border-color:#FAA10C; 
+  border-color:#FAA10C;
 }
 
 .tabs {
-  display: none; 
+  display: none;
 }
 
 .tabs.active-area {
   display: block;
-  text-align: center; 
+  text-align: center;
 }
 
 .district-article-cards {
@@ -160,11 +160,11 @@
 .protograph-app-tab {
   display: table-cell;
   height: 3px;
-  background: #dadada; 
+  background: #dadada;
 }
 
 .protograph-app-active-tab {
-  background:#e03832; 
+  background:#e03832;
 }
 
 .protograph-app-tabs-container {
@@ -184,7 +184,7 @@
   margin-bottom: 20px;
   bottom: 0px;
   position: absolute;
-  margin-left: 20px; 
+  margin-left: 20px;
 }
 
 /* data.css */
@@ -424,7 +424,7 @@
 }
 #show-more-cards:focus {
   outline: 0;
-} 
+}
 .protograph-card:hover {
   box-shadow: 0px 5px 15px lightgrey;
   background: whitesmoke;
@@ -573,9 +573,11 @@
 }
 
 .summary{
-  height: 175px;
+  /* height: 175px; */
   color: grey;
   font-family: cabin;
+  margin-bottom: 20px;
+  overflow: hidden;
 }
 
 .policy-div{
@@ -801,7 +803,7 @@
     transform: translate(0, 0);
     width: 300px;
     margin-bottom: 100px;
-  } 
+  }
   .protograph-modal {
     top: 10%;
     left: 0%;
