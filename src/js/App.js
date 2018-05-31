@@ -115,21 +115,21 @@ class App extends React.Component {
       arr_of_values.push(value)
     }
     // console.log(arr_of_values,"arr_of_values");
-    return arr_of_values;   
+    return arr_of_values;
   }
 
   createObj(group, param, keyValue){
     let obj = {},
       arr1 = [];
-    
+
     for (let i=0; i<keyValue.length; i++){
       if (group[keyValue[i]] === undefined){
         obj[keyValue[i]] = []
       } else {
         obj[keyValue[i]] = group[keyValue[i]]
       }
-    }    
-    // console.log(obj, "object")   
+    }
+    // console.log(obj, "object")
     return obj;
   }
 
@@ -351,7 +351,10 @@ class App extends React.Component {
                 <a href='#' id='facebook-share-link' target="_blank"><div className="single-share-icon"><img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/article-share-facebook.png"/></div></a>
                 <a href='#' id='twitter-share-link' target="_blank"><div className="single-share-icon"><img src="https://cdn.protograph.pykih.com/Assets/proto-app/img/article-share-twitter.png"/></div></a>
               </div>
-              <div className="summary-text">Land Conflict Watch is a research-based data journalism project that maps and analyzes ongoing land conflicts in India.</div>
+              {
+                ProtoGraph.page.summary &&
+                  <div className="summary-text">{ProtoGraph.page.summary}</div>
+              }
             </div>
             <Filter
               configurationJSON={this.props.filterConfigurationJSON}
