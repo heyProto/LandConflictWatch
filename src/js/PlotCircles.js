@@ -12,9 +12,9 @@ class PlotCircles extends React.Component {
       let radiusScale;
       if (selectedTab !== 'no_of_conflicts'){
         let max = d3Max(this.props.dataJSON, function (d, i){
-          return d[selectedTab];
+          return +d[selectedTab];
         })
-
+        console.log(max, "max")
         radiusScale = d3ScaleLinear()
           .domain([0, max])
           .range([4, 20]);
@@ -26,7 +26,7 @@ class PlotCircles extends React.Component {
           radius = 4
         } else {
           console.log("else")
-          radius = radiusScale(point[selectedTab])
+          radius = radiusScale(+point[selectedTab])
         }
         return(
           <circle id="map_circles"
