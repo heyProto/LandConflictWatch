@@ -1,17 +1,32 @@
 ProtoGraph.initDataApp = function () {
     var x = new ProtoGraph.Card.toMaps(),
         streams = ProtoGraph.streams,
-        page = ProtoGraph.page;
+        page = ProtoGraph.page,
+        selectedTab;
+
+    switch(page.headline){
+        case "No. of conflicts": 
+            selectedTab = 'no_of_conflicts'
+            break;
+        case "Investments":
+            selectedTab = 'investments'
+            break;
+        case "No. of people affected":
+            selectedTab = 'no_of_people_affected'
+            break;
+        case "Land Area affected":
+            selectedTab = 'land_area_affected'
+            break;
+    }
 
     x.init({
         selector: document.querySelector('#card-list-div'),
         dataURL: streams.Grid.url,
-        // dataURL: "https://d2izuvkqhcn1gq.cloudfront.net/3085c3451ef0813e425ca73d/index.json",
         topoURL: 'https://duxxuzyhk2mdg.cloudfront.net/data/india-topo.json',
         chartOptions: {
             height: 700,
             defaultCircleColor: ProtoGraph.site['house_colour'],
-            selectedTab: 'no_of_people_affected'
+            selectedTab: selectedTab
         },
         filterConfigurationJSON: {
             colors: {
