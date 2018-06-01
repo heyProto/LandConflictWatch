@@ -1,7 +1,7 @@
 import React from 'react';
 import Util from '../js/Utility';
-import { scaleLinear as d3ScaleLinear } from 'd3-scale';
-import { max as d3Max } from 'd3-array';
+import { scaleLinear as d3ScaleLinear, scaleOrdinal as d3ScaleOrdinal } from 'd3-scale';
+import { max as d3Max, min as d3Min } from 'd3-array';
 
 class PlotCircles extends React.Component { 
   render() {
@@ -10,17 +10,20 @@ class PlotCircles extends React.Component {
     } else {
       const {selectedTab, defaultCircleColor} = this.props.chartOptions;
       let radiusScale;
-      if (selectedTab !== 'no_of_conflicts'){
-        let max = d3Max(this.props.dataJSON, function (d, i){
-          return +d[selectedTab];
-        })
-        console.log(max, "max")
-        radiusScale = d3ScaleLinear()
-          .domain([0, max])
-          .range([4, 20]);
+      if (selectedTab === 'no_of_people_affected'){
+        radiusScale = d3ScaleOrdinal()
+          .domain(['< 500', '500-2000', '2000-5000', '5000-20000', '20000-100000', '> 100000'])
+          .range([4, 6, 8, 10, 12, 14]);
+      } else if (selectedTab === 'land_area_affected') {
+        radiusScale = d3ScaleOrdinal()
+          .domain(['< 50', '50-500', '500-5000', '5000-50000', '50000-100000', '> 100000'])
+          .range([4, 6, 8, 10, 12, 14]);
+      } else if (selectedTab === 'investments'){
+        radiusScale = d3ScaleOrdinal()
+          .domain(['< 100', '100-1000', '1000-20000', '20000-50000', '50000-100000', '> 100000'])
+          .range([4, 6, 8, 10, 12, 14]);
       }
       const circles = this.props.dataJSON.map((point, i) => {
-        // console.log(radiusScale(point.no_of_people_affected), point.no_of_people_affected, "radius")
         let radius
         if (selectedTab === 'no_of_conflicts'){
           radius = 4

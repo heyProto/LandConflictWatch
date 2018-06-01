@@ -40,9 +40,65 @@ class App extends React.Component {
           filters,
           filterJSON,
           keyValue,
-          groupBy;
+          groupBy, 
+          selectedTab = this.props.chartOptions.selectedTab
 
-        data = card.data;
+        data = card.data
+
+        data.forEach((d, i) =>{
+          d[selectedTab] = +d[selectedTab]
+          if (d[selectedTab] >= 0 && d[selectedTab] < 500 || d[selectedTab] === ''){
+            d.no_of_people_affected_range = '< 500'
+          } else if (d[selectedTab] >= 500 && d[selectedTab] < 2000){
+            d.no_of_people_affected_range = '500-2000'
+          } else if (d[selectedTab] >= 2000 && d[selectedTab] < 5000){
+            d.no_of_people_affected_range = '2000-5000'
+          } else if (d[selectedTab] >= 5000 && d[selectedTab] < 20000){
+            d.no_of_people_affected_range = '5000-20000'
+          } else if (d[selectedTab] >= 5000 && d[selectedTab] < 20000){
+            d.no_of_people_affected_range = '5000-20000'
+          } else if (d[selectedTab] >= 20000 && d[selectedTab] < 100000){
+            d.no_of_people_affected_range = '20000-100000'
+          } else {
+            d.no_of_people_affected_range = '> 100000'
+          }    
+        })
+
+        data.forEach((d, i) =>{
+          d[selectedTab] = +d[selectedTab]
+          if (d[selectedTab] >= 0 && d[selectedTab] < 50 || d[selectedTab] === ''){
+            d.land_area_affected_range = '< 50'
+          } else if (d[selectedTab] >= 50 && d[selectedTab] < 500){
+            d.land_area_affected_range = '50-500'
+          } else if (d[selectedTab] >= 500 && d[selectedTab] < 5000){
+            d.land_area_affected_range = '500-5000'
+          } else if (d[selectedTab] >= 5000 && d[selectedTab] < 50000){
+            d.land_area_affected_range = '5000-50000'
+          } else if (d[selectedTab] >= 50000 && d[selectedTab] < 100000){
+            d.land_area_affected_range = '50000-100000'
+          } else {
+            d.land_area_affected_range = '> 100000'
+          }    
+        })
+       
+        data.forEach((d, i) =>{
+          d[selectedTab] = +d[selectedTab]
+          if (d[selectedTab] >= 0 && d[selectedTab] < 100 || d[selectedTab] === ''){
+            d.investments_range = '< 100'
+          } else if (d[selectedTab] >= 100 && d[selectedTab] < 1000){
+            d.investments_range = '50-500'
+          } else if (d[selectedTab] >= 1000 && d[selectedTab] < 20000){
+            d.investments_range = '500-5000'
+          } else if (d[selectedTab] >= 20000 && d[selectedTab] < 50000){
+            d.investments_range = '5000-50000'
+          } else if (d[selectedTab] >= 50000 && d[selectedTab] < 100000){
+            d.investments_range = '50000-100000'
+          } else {
+            d.investments_range = '> 100000'
+          }    
+        })
+      
+        console.log(data, "data with ranges added")
         data.forEach((e,i) => { e.u_id = (i+1) });
 
         filters = this.state.filters.map((filter) => {
