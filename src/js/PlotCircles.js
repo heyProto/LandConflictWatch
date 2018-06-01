@@ -25,7 +25,6 @@ class PlotCircles extends React.Component {
         if (selectedTab === 'no_of_conflicts'){
           radius = 4
         } else {
-          console.log("else")
           radius = radiusScale(+point[selectedTab])
         }
         return(
