@@ -23,8 +23,7 @@ ProtoGraph.initDataApp = function () {
     console.log(streams.Grid.url)
     x.init({
         selector: document.querySelector('#card-list-div'),
-        dataURL: streams.Grid.url,
-        // dataURL: "https://d2izuvkqhcn1gq.cloudfront.net/3085c3451ef0813e425ca73d/index.json",
+        dataURL: "https://d2izuvkqhcn1gq.cloudfront.net/3085c3451ef0813e425ca73d/index.json",
         topoURL: 'https://duxxuzyhk2mdg.cloudfront.net/data/india-topo.json',
         chartOptions: {
             height: 700,
