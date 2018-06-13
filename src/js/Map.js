@@ -145,12 +145,12 @@ class MapsCard extends React.Component {
       )
     } else {
       let sector = [
-        { "name": "Industry", "color": "blue" },
-        { "name": "Infrastructure", "color": "red"},
-        { "name": "Land use", "color": "yellow" },
-        { "name": "Mining", "color": "black"},
-        { "name": "Power", "color": "green"},
-        { "name": "Protected area", "color": "purple"}
+        { "name": "Industry", "color": "#1570da" },
+        { "name": "Infrastructure", "color": '#d0021b'},
+        { "name": "Land Use", "color": '#faa516' },
+        { "name": "Mining", "color": '#000000'},
+        { "name": "Conservation/Forestry", "color": '#59ab00'},
+        { "name": "Power", "color": '#bd10e0'}
       ]
       map_legends = sector.map((d, i) =>{
         return(

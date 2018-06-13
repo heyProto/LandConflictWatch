@@ -9,7 +9,7 @@ class PlotCircles extends React.Component {
       return(<div></div>)
     } else {
       const {selectedTab, defaultCircleColor} = this.props.chartOptions;
-      let radiusScale;
+      let radiusScale,fillColorScale;
       if (selectedTab === 'no_of_people_affected'){
         radiusScale = d3ScaleOrdinal()
           .domain(['< 500', '500-2000', '2000-5000', '5000-20000', '20000-100000', '> 100000'])
@@ -23,10 +23,26 @@ class PlotCircles extends React.Component {
           .domain(['< 100', '100-1000', '1000-20000', '20000-50000', '50000-100000', '> 100000'])
           .range([4, 6, 8, 10, 12, 14]);
       }
+
+      console.log(selectedTab);
+
+      if(selectedTab === "no_of_conflicts"){
+        fillColorScale = d3ScaleOrdinal()
+          .domain(["Industry", "Infrastructure", "Land Use", "Mining", "Conservation/Forestry", "Power"])
+          .range(['#1570da','#d0021b','#faa516','#000000','#59ab00','#bd10e0']);
+      }
+      else{
+        fillColor = defaultCircleColor;
+      }
+
       const circles = this.props.dataJSON.map((point, i) => {
-        let radius
+        let radius,fillColor;
         if (selectedTab === 'no_of_conflicts'){
           radius = 4
+          if(point["type_of_industry"])
+            fillColor = fillColorScale(point["type_of_industry"])
+          else  
+            fillColor = defaultCircleColor  
         } else {
           radius = radiusScale(+point[selectedTab])
         }
@@ -38,7 +54,7 @@ class PlotCircles extends React.Component {
             cy={this.props.projection([point.longitude, point.latitude])[1]} 
             r={radius}
             opacity={selectedTab === 'no_of_conflicts' ? 1 : 0.6}
-            fill={defaultCircleColor}>
+            fill={fillColor}>
           </circle>
         )
       });
