@@ -42,12 +42,16 @@ ProtoGraph.initDataApp = function () {
         },
         filters: [
             {
-                "alias": "Year",
+                "alias": "Year when conflict started ",
                 "propName": "year"
             },
             {
                 "alias": "State",
                 "propName": "state"
+            },
+            {
+                "alias": "District",
+                "propName": "district"
             },
             // {
             //     "alias": "Number of people affected",
