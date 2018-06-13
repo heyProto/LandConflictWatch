@@ -31,9 +31,7 @@ class PlotCircles extends React.Component {
           .domain(["Industry", "Infrastructure", "Land Use", "Mining", "Conservation/Forestry", "Power"])
           .range(['#1570da','#d0021b','#faa516','#000000','#59ab00','#bd10e0']);
       }
-      else{
-        fillColor = defaultCircleColor;
-      }
+      
 
       const circles = this.props.dataJSON.map((point, i) => {
         let radius,fillColor;
@@ -45,6 +43,9 @@ class PlotCircles extends React.Component {
             fillColor = defaultCircleColor  
         } else {
           radius = radiusScale(+point[selectedTab])
+        }
+        if(!fillColor){
+          fillColor = defaultCircleColor;
         }
         return(
           <circle id="map_circles"
