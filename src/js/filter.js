@@ -410,8 +410,7 @@ export default class Filter extends React.Component {
                         <div className="protograph-filter-chevron-icon">
                           <i className="chevron down icon"></i>
                         </div>
-                        :
-                        <div className="protograph-filter-item-arrow" > {e.count} </div>
+                        :''
                     }
                     {
                       e.is_active &&

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {voronoi as d3Voronoi} from 'd3-voronoi';
 // import Modal from '../js/Modal';
-import Util from '../js/Utility';
+import Util from '../js/utility';
 
 class Voronoi extends React.Component {
   constructor(props) {

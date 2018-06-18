@@ -1,5 +1,5 @@
 import React from 'react';
-import Util from '../js/Utility';
+import Util from '../js/utility';
 import { scaleLinear as d3ScaleLinear, scaleOrdinal as d3ScaleOrdinal } from 'd3-scale';
 import { max as d3Max, min as d3Min } from 'd3-array';
 
