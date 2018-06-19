@@ -3,16 +3,69 @@ import {groupBy} from './utility.js';
 
 export default class Filter extends React.Component {
 
+  GetSortOrder(prop) {  
+    return function(a, b) {
+        if(a[prop] === 'Not available'){
+          // console.log(prop)
+          return 0;
+        }  
+        else if (a[prop] < b[prop]) {  
+            return 1;  
+        } else if (a[prop] > b[prop]) {  
+            return -1;  
+        }  
+        return 0;  
+    }  
+  }
+
   constructor(props) {
     super(props);
-
+    let year_not,year_index,years,land_type;
     var filterJSON = this.props.filterJSON.map((e, i) => {
       e.id = this.uuidv4();
       e.parent_ids = [i];
       e.filters = this.setIDs(e.parent_ids, e.filters);
       return e;
     });
-    filterJSON[0].is_active = true;
+    filterJSON[0].is_active = true; 
+
+    //Sort years in descending order 
+    years = filterJSON[0].filters[0].filters ;
+    for(let i in years){
+      if(years[i].value === 'Not available'){
+        year_index = i;
+        year_not = years[i]
+        // console.log('found')
+      }
+        
+    }
+    years.splice(year_index,1)
+    years.sort(this.GetSortOrder('value'));
+    // console.log(years)
+    years.push(year_not)
+
+    //Changing the order of type of land filter 
+    land_type = filterJSON[0].filters[5].filters;
+    for(let i in land_type){
+      switch(land_type[i].name){
+        case 'Private':
+          land_type[i].index = 4;
+          break;
+        case 'Common':
+          land_type[i].index = 3;
+          break;
+        case 'Both' :
+          land_type[i].index = 2;
+          break;
+        default:
+          land_type[i].index = 1;      
+      }
+    }
+    land_type.sort(this.GetSortOrder('index'));
+    
+    // console.log(land_type)
+
+
 
     var stateVars = {
       moveIn: undefined,
@@ -100,11 +153,14 @@ export default class Filter extends React.Component {
       return e;
     });
 
+    //Sorting the years in descending order 
+
     this.setState({
       filterJSON: filterJSON,
       activeTabJSON: activeTabJSON,
       filterParams: filterParams
     });
+    // console.log(activeTabJSON)
   }
 
   componentDidMount () {
@@ -281,17 +337,25 @@ export default class Filter extends React.Component {
       dataJSON = this.state.dataJSON,
       filteredData = [],
       filterGroup,
+      contains,
       filterGroupKeys;
 
     filterGroup = groupBy(filterParams, 'parent_id');
     filterGroupKeys = Object.keys(filterGroup);
-
+    
     filterGroupKeys.forEach(group => {
       let orResults = [];
       filterGroup[group].forEach((e, i) => {
         let temp = dataJSON.filter((f, j) => {
+          // console.log("in filter " + this.getDataValue(f, e)+ " " + e.value)
+          
+          if(Array.isArray(this.getDataValue(f,e))){
+            return this.getDataValue(f,e).indexOf(e.value) !== -1
+          }
+          
           return this.getDataValue(f, e) === e.value
         });
+        console.log(temp.length)
         orResults = orResults.concat(temp);
       });
       if (!filteredData.length) {
@@ -308,7 +372,7 @@ export default class Filter extends React.Component {
     if (filterParams.length === 0 && filteredData.length <= 0) {
       filteredData = this.state.dataJSON;
     }
-
+    console.log(filteredData.length)
     this.setState({
       filteredData: filteredData
     }, this.onChange);
@@ -319,12 +383,14 @@ export default class Filter extends React.Component {
       parent_ids = filter_obj.parent_ids,
       activeTabJSON = this.state.filterJSON[parent_ids[0]],
       filters;
-
     for (let i = 1; i < parent_ids.length - 1; i++) {
+      
       data = data[activeTabJSON.filters[parent_ids[i]].key]
       // console.log(data, "data in filters")
       activeTabJSON = activeTabJSON.filters[parent_ids[i]];
+      
     }
+    console.log(data)
     return data;
   }
 
@@ -357,6 +423,7 @@ export default class Filter extends React.Component {
   }
 
   getName(e) {
+    //console.log(e)
     if (!e.renderName) {
       return e.name;
     } else {
@@ -377,6 +444,7 @@ export default class Filter extends React.Component {
   }
 
   renderFilterItems(filters, subItems) {
+    // console.log(filters)
     return (
       <div className={`${!subItems ? 'protograph-filter-items-container' : 'protograph-filter-sub-items-container' }`} >
         <div className= {`${!subItems ? 'protograph-filter-list-area' : '' }`}>
@@ -393,8 +461,11 @@ export default class Filter extends React.Component {
 
               let onClickCallback = this.getOnClickCallback(e);
               let name = this.getName(e);
-
+              
+              {/* if(e.count > 0 || this.itemHasMoreFilters(e) ){ */}
+              {/* console.log(e) */}
               return (
+                
                 <div key={i} className="protograph-filter-item-detail">
                   <div
                     key={i}
@@ -430,7 +501,9 @@ export default class Filter extends React.Component {
                   }
                 </div>
               )
+              {/* } */}
             })
+            
           }
         </div>
       </div>
@@ -461,7 +534,9 @@ export default class Filter extends React.Component {
               <div className="protograph-filters-tabs-container">
                 {
                   this.state.filterJSON.map((e,i)=> {
+                    
                     return(
+                      
                       <div
                         key={i}
                         id={`protograph_filter_tab_${i}`}
@@ -471,6 +546,7 @@ export default class Filter extends React.Component {
                       >
                         {e.name}
                       </div>
+                      
                     )
                   })
                 }

@@ -24,7 +24,7 @@ class PlotCircles extends React.Component {
           .range([4, 6, 8, 10, 12, 14]);
       }
 
-      console.log(selectedTab);
+      // console.log(selectedTab);
 
       if(selectedTab === "no_of_conflicts"){
         fillColorScale = d3ScaleOrdinal()

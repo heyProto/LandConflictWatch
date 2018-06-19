@@ -104,7 +104,7 @@
 
 <% let language = site.primary_language.toLowerCase(); %>
     <% let body_class = language !== 'english' ? `language-${language}` : "proto-app-body"; %>
-        <% let site_name = site.name ? `By ${site.name}` : ""; %>
+        // <% let site_name = site.name ? `By ${site.name}` : ""; %>
 
             <body class="<%= body_class %>">
                 <% if (site.comscore_code) { %>

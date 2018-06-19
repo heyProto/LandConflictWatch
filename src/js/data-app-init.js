@@ -20,10 +20,10 @@ ProtoGraph.initDataApp = function () {
             selectedTab = 'land_area_affected'
             break;
     }
-    console.log(streams.Grid.url)
+    // console.log(streams.Grid.url)
     x.init({
         selector: document.querySelector('#card-list-div'),
-        dataURL: "https://d2izuvkqhcn1gq.cloudfront.net/3085c3451ef0813e425ca73d/index.json",
+        dataURL: "http://localhost:8080/sample.json",
         topoURL: 'https://duxxuzyhk2mdg.cloudfront.net/data/india-topo.json',
         chartOptions: {
             height: 700,

@@ -10,6 +10,7 @@ import Modal from "./Modal.js";
 class App extends React.Component {
   constructor(props) {
     super(props)
+    console.log(props)
     let state = window.location.hash.split('/')[1];
     this.state = {
       dataJSON: undefined,
@@ -44,7 +45,7 @@ class App extends React.Component {
           selectedTab = this.props.chartOptions.selectedTab
 
         data = card.data
-
+        console.log(data)
         data.forEach((d, i) =>{
           d[selectedTab] = +d[selectedTab]
           if (d[selectedTab] >= 0 && d[selectedTab] < 500 || d[selectedTab] === ''){
@@ -98,12 +99,16 @@ class App extends React.Component {
           }    
         })
       
-        console.log(data, "data with ranges added")
+        // console.log(data, "data with ranges added")
         data.forEach((e,i) => { e.u_id = (i+1) });
 
         filters = this.state.filters.map((filter) => {
+          console.log("hey",groupBy)
+          console.log(data)
           groupBy = Utils.groupBy(data, filter.propName)
           keyValue = this.findKeyValue(groupBy)
+          // console.log(groupBy)
+          // console.log(keyValue)
           return {
             name: filter.alias,
             key: filter.propName,
@@ -167,8 +172,10 @@ class App extends React.Component {
 
   findKeyValue(group){
     let arr_of_values = [];
+    // console.log(group)
     for (let value in group){
-      arr_of_values.push(value)
+        
+        arr_of_values.push(value)
     }
     // console.log(arr_of_values,"arr_of_values");
     return arr_of_values;
@@ -259,6 +266,7 @@ class App extends React.Component {
   }
 
   onChange(filteredData) {
+    // console.log(filteredData)
     // console.log(filteredData, "filteredData")
     let groupBy, keyValue;
     let filtDat = this.state.filters.map((filter) => {

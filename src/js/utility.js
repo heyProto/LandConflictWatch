@@ -29,16 +29,32 @@ function formatDate(date) {
 }
 
 function groupBy(data, column) {
+    // console.log(data,column)
     let grouped_data = {},
         key;
     switch (typeof column) {
         case "string":
             data.forEach(datum => {
-                key = datum[column] ? datum[column] : "Not available";
-                if (grouped_data[key]) {
-                    grouped_data[key].push(datum);
-                } else {
-                    grouped_data[key] = [datum];
+                if(Array.isArray(datum[column])){
+                   for(let i in datum[column]){
+                    key = datum[column][i] ? datum[column][i] : "Not available";
+                    // console.log(key)
+                    if(typeof key === "function"){}
+                        // console.log(key)
+                    else if (grouped_data[key]) {
+                        grouped_data[key].push(datum);
+                    } else {
+                        grouped_data[key] = [datum];
+                    }
+                   } 
+                }
+                else{
+                    key = datum[column] ? datum[column] : "Not available";
+                    if (grouped_data[key]) {
+                        grouped_data[key].push(datum);
+                    } else {
+                        grouped_data[key] = [datum];
+                    }
                 }
             });
             break;
