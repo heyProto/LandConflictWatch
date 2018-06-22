@@ -125,4 +125,21 @@ ProtoGraph.initPage = function () {
       });
     }
   }
+
+  Util.getJSON(streams['credits'].url, function (err, data) {
+    if (err != null) {
+        console.error("Error fetching cover stream", err);
+    } else {
+        if (data.length > 0) {
+            data = [data[0]];
+            data.map((d, i) => {
+                setTimeout(function () {
+                    new ProtoEmbed.initFrame($("#credits_container #" + d.view_cast_id)[0], `${data[i].iframe_url}%26domain=${location.hostname}`, mode_for_cover,{
+                        headerJSON: headerJSON
+                    });
+                }, 0)
+            })
+        }
+    }
+});
 }
