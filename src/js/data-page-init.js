@@ -78,7 +78,7 @@ ProtoGraph.initPage = function () {
             marginDiv.style.marginBottom = "20px";
             cover_container.appendChild(marginDiv);
             setTimeout(function () {
-              var sandbox_iframe = new ProtoEmbed.initFrame(document.getElementById(`ProtoCard_16c_cover_${i}`), data[i].iframe_url + "&policy=" + ProtoGraph.page.headline + "&page_url=1176", mode_for_cover, {
+              var sandbox_iframe = new ProtoEmbed.initFrame(document.getElementById(`ProtoCard_16c_cover_${i}`), data[i].iframe_url + "&policy=" + ProtoGraph.page.headline +"&origin=" + window.location.origin + "&page_url=" + (ProtoGraph.page.hasOwnProperty("id") ? ProtoGraph.page.id : ""), mode_for_cover, {
                 headerJSON: headerJSON
               });
             }, 0)
@@ -125,4 +125,21 @@ ProtoGraph.initPage = function () {
       });
     }
   }
+
+  Util.getJSON(streams['credits'].url, function (err, data) {
+    if (err != null) {
+        console.error("Error fetching cover stream", err);
+    } else {
+        if (data.length > 0) {
+            data = [data[0]];
+            data.map((d, i) => {
+                setTimeout(function () {
+                    new ProtoEmbed.initFrame($("#credits_container #" + d.view_cast_id)[0], `${data[i].iframe_url}%26domain=${location.hostname}`, mode_for_cover,{
+                        headerJSON: headerJSON
+                    });
+                }, 0)
+            })
+        }
+    }
+});
 }
