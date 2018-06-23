@@ -29,39 +29,42 @@ export default class Filter extends React.Component {
     });
     filterJSON[0].is_active = true; 
 
-    //Sort years in descending order 
-    years = filterJSON[0].filters[0].filters ;
-    for(let i in years){
-      if(years[i].value === 'Not available'){
-        year_index = i;
-        year_not = years[i]
-        // console.log('found')
-      }
+    console.log("years",filterJSON[0].filters[0].filters)
+    // //Sort years in descending order 
+    // years = filterJSON[0].filters[0].filters ;
+    // years.forEach(function(e,i){
+    //   if(years[i].value === 'Not available'){
+    //     year_index = i;
+    //     year_not = years[i]
+    //     // console.log('found')
+    //   }
         
-    }
-    years.splice(year_index,1)
-    years.sort(this.GetSortOrder('value'));
-    // console.log(years)
-    years.push(year_not)
+    // })
+    // years.splice(year_index,1)
+    // // years.sort(this.GetSortOrder('value'));
+    // years.push(year_not)
 
-    //Changing the order of type of land filter 
-    land_type = filterJSON[0].filters[5].filters;
-    for(let i in land_type){
-      switch(land_type[i].name){
-        case 'Private':
-          land_type[i].index = 4;
-          break;
-        case 'Common':
-          land_type[i].index = 3;
-          break;
-        case 'Both' :
-          land_type[i].index = 2;
-          break;
-        default:
-          land_type[i].index = 1;      
-      }
-    }
-    land_type.sort(this.GetSortOrder('index'));
+    // filterJSON[0].filters[0].filters = years;
+    // console.log("yearsa",filterJSON[0].filters[0].filters)
+
+    // //Changing the order of type of land filter 
+    // land_type = filterJSON[0].filters[5].filters;
+    // for(let i in land_type){
+    //   switch(land_type[i].name){
+    //     case 'Private':
+    //       land_type[i].index = 4;
+    //       break;
+    //     case 'Common':
+    //       land_type[i].index = 3;
+    //       break;
+    //     case 'Both' :
+    //       land_type[i].index = 2;
+    //       break;
+    //     default:
+    //       land_type[i].index = 1;      
+    //   }
+    // }
+    // land_type.sort(this.GetSortOrder('index'));
     
     // console.log(land_type)
 
@@ -235,16 +238,15 @@ export default class Filter extends React.Component {
   }
 
   //Reset the currentViewLevel
-  handleTabClick (e) {
+  TabClick (e) {
     var tabID = +e.target.closest('.protograph-filters-tab').getAttribute('data-tab_id'),
       activeTab = document.querySelector('.protograph-filters-tab.protograph-filters-tab-active'),
       activeTabId = activeTab.getAttribute('data-tab_id'),
       filterJSON = this.state.filterJSON,
       activeTabJSON;
-
+    
     filterJSON[activeTabId].is_active = false;
     filterJSON[tabID].is_active = true;
-
     activeTabJSON = this.props.filterJSON.filter((e,i) => {return e.is_active === true;})[0];
 
     this.setState({
@@ -355,7 +357,7 @@ export default class Filter extends React.Component {
           
           return this.getDataValue(f, e) === e.value
         });
-        console.log(temp.length)
+        // console.log(temp.length)
         orResults = orResults.concat(temp);
       });
       if (!filteredData.length) {
@@ -372,7 +374,7 @@ export default class Filter extends React.Component {
     if (filterParams.length === 0 && filteredData.length <= 0) {
       filteredData = this.state.dataJSON;
     }
-    console.log(filteredData.length)
+    // console.log(filteredData.length)
     this.setState({
       filteredData: filteredData
     }, this.onChange);
@@ -390,7 +392,7 @@ export default class Filter extends React.Component {
       activeTabJSON = activeTabJSON.filters[parent_ids[i]];
       
     }
-    console.log(data)
+    // console.log(data)
     return data;
   }
 
@@ -481,7 +483,7 @@ export default class Filter extends React.Component {
                         <div className="protograph-filter-chevron-icon">
                           <i className="chevron down icon"></i>
                         </div>
-                        :''
+                        : <div className="protograph-filter-item-arrow" > {e.count} </div>
                     }
                     {
                       e.is_active &&

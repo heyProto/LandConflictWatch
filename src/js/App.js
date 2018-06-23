@@ -10,7 +10,7 @@ import Modal from "./Modal.js";
 class App extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props)
+    // console.log(props)
     let state = window.location.hash.split('/')[1];
     this.state = {
       dataJSON: undefined,
@@ -45,7 +45,7 @@ class App extends React.Component {
           selectedTab = this.props.chartOptions.selectedTab
 
         data = card.data
-        console.log(data)
+        // console.log(data)
         data.forEach((d, i) =>{
           d[selectedTab] = +d[selectedTab]
           if (d[selectedTab] >= 0 && d[selectedTab] < 500 || d[selectedTab] === ''){
@@ -103,8 +103,8 @@ class App extends React.Component {
         data.forEach((e,i) => { e.u_id = (i+1) });
 
         filters = this.state.filters.map((filter) => {
-          console.log("hey",groupBy)
-          console.log(data)
+          // console.log("hey",groupBy)
+          // console.log(data)
           groupBy = Utils.groupBy(data, filter.propName)
           keyValue = this.findKeyValue(groupBy)
           // console.log(groupBy)
