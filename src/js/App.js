@@ -241,7 +241,7 @@ class App extends React.Component {
 
 
   sortObject(obj, filter) {
-    var arr = [];
+    var arr = [],nai,na;
     for (var prop in obj) {
       if (obj.hasOwnProperty(prop)) {
         arr.push({
@@ -251,17 +251,57 @@ class App extends React.Component {
         });
       }
     }
-    arr.sort(function (a, b) {
-      let key1 = a.count,
-        key2 = b.count;
-      if (key1 > key2) {
-        return -1;
-      } else if (key1 == key2) {
-        return 0;
-      } else {
-        return 1;
-      }
-    });
+    if(filter.propName === "year"){
+      na = arr.findIndex(x => x.name === "Not available" )
+      nai = arr.splice(na,1); 
+      console.log(nai)
+      arr.sort((a,b) => {
+        console.log(a.value,b.value,a.value>b.value)
+        if (a.value > b.value)
+          return 1
+        if (a.value < b.value)
+          return -1
+        else  
+          return 0    
+
+      })
+      arr.reverse()
+      arr.push(nai[0])
+      console.log(arr)  
+    }
+    else if(filter.propName === "type_of_land"){
+      arr.forEach((e,i) => {
+        switch(e.name){
+          case "Private":
+            e.index = 1
+            break;
+          case "Common":  
+            e.index = 2
+            break
+          case "Both":
+            e.index = 3
+            break
+          default:
+            e.index = 4    
+        }
+
+      })
+
+      arr.sort((a,b) => {return a.index > b.index})
+    }
+    else{
+      arr.sort(function (a, b) {
+        let key1 = a.count,
+          key2 = b.count;
+        if (key1 > key2) {
+          return -1;
+        } else if (key1 == key2) {
+          return 0;
+        } else {
+          return 1;
+        }
+      }); 
+    }
     return arr; // returns array
   }
 

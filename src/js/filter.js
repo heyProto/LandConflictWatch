@@ -3,20 +3,7 @@ import {groupBy} from './utility.js';
 
 export default class Filter extends React.Component {
 
-  GetSortOrder(prop) {  
-    return function(a, b) {
-        if(a[prop] === 'Not available'){
-          // console.log(prop)
-          return 0;
-        }  
-        else if (a[prop] < b[prop]) {  
-            return 1;  
-        } else if (a[prop] > b[prop]) {  
-            return -1;  
-        }  
-        return 0;  
-    }  
-  }
+  
 
   constructor(props) {
     super(props);
@@ -29,45 +16,7 @@ export default class Filter extends React.Component {
     });
     filterJSON[0].is_active = true; 
 
-    console.log("years",filterJSON[0].filters[0].filters)
-    // //Sort years in descending order 
-    // years = filterJSON[0].filters[0].filters ;
-    // years.forEach(function(e,i){
-    //   if(years[i].value === 'Not available'){
-    //     year_index = i;
-    //     year_not = years[i]
-    //     // console.log('found')
-    //   }
-        
-    // })
-    // years.splice(year_index,1)
-    // // years.sort(this.GetSortOrder('value'));
-    // years.push(year_not)
-
-    // filterJSON[0].filters[0].filters = years;
-    // console.log("yearsa",filterJSON[0].filters[0].filters)
-
-    // //Changing the order of type of land filter 
-    // land_type = filterJSON[0].filters[5].filters;
-    // for(let i in land_type){
-    //   switch(land_type[i].name){
-    //     case 'Private':
-    //       land_type[i].index = 4;
-    //       break;
-    //     case 'Common':
-    //       land_type[i].index = 3;
-    //       break;
-    //     case 'Both' :
-    //       land_type[i].index = 2;
-    //       break;
-    //     default:
-    //       land_type[i].index = 1;      
-    //   }
-    // }
-    // land_type.sort(this.GetSortOrder('index'));
     
-    // console.log(land_type)
-
 
 
     var stateVars = {
@@ -292,7 +241,7 @@ export default class Filter extends React.Component {
       activeTabJSON;
 
     filterParams.push(item);
-
+    // console.log("regitser",item)
     for (let i = 1; i < parent_ids.length; i++) {
       tempJSON.filters[parent_ids[i]].is_active = true;
       tempJSON = tempJSON.filters[parent_ids[i]];
@@ -420,6 +369,7 @@ export default class Filter extends React.Component {
     if (this.itemHasMoreFilters(e)) {
       return this.toggleFilter;
     } else {
+      // console.log(e)
       return e.is_active ? undefined : this.registerFilter;
     }
   }
@@ -511,6 +461,8 @@ export default class Filter extends React.Component {
       </div>
     )
   }
+
+
 
   render() {
     let styles = this.getStyleString();
