@@ -246,14 +246,15 @@ class App extends React.Component {
       if (obj.hasOwnProperty(prop)) {
         arr.push({
           'name': `${prop}`,
-          'value': prop,
+          'value': (prop === "Not available")? "":prop,
           'count': obj[prop] === undefined ? 0 : obj[prop].length
         });
       }
     }
+    na = arr.findIndex(x => x.name === "Not available" )
+    nai = arr.splice(na,1);
     if(filter.propName === "year"){
-      na = arr.findIndex(x => x.name === "Not available" )
-      nai = arr.splice(na,1); 
+       
       console.log(nai)
       arr.sort((a,b) => {
         console.log(a.value,b.value,a.value>b.value)
@@ -266,7 +267,7 @@ class App extends React.Component {
 
       })
       arr.reverse()
-      arr.push(nai[0])
+      
       console.log(arr)  
     }
     else if(filter.propName === "type_of_land"){
@@ -302,6 +303,7 @@ class App extends React.Component {
         }
       }); 
     }
+    arr.push(nai[0])
     return arr; // returns array
   }
 

@@ -28,6 +28,7 @@ class ListCards extends React.Component {
   // }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.dataJSON)
     this.setState({
       cardsVisible: nextProps.dataJSON.slice(0, this.state.no_of_cards)
     });
