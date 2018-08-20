@@ -46,7 +46,7 @@ function groupBy(data, column) {
                     } else {
                         grouped_data[key] = [datum];
                     }
-                   } 
+                   }
                 }
                 else{
                     key = datum[column] ? datum[column] : "Not available";

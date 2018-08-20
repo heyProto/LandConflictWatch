@@ -41,7 +41,7 @@ class App extends React.Component {
           filters,
           filterJSON,
           keyValue,
-          groupBy, 
+          groupBy,
           selectedTab = this.props.chartOptions.selectedTab
 
         data = card.data
@@ -62,7 +62,7 @@ class App extends React.Component {
             d.no_of_people_affected_range = '20000-100000'
           } else {
             d.no_of_people_affected_range = '> 100000'
-          }    
+          }
         })
 
         data.forEach((d, i) =>{
@@ -79,9 +79,9 @@ class App extends React.Component {
             d.land_area_affected_range = '50000-100000'
           } else {
             d.land_area_affected_range = '> 100000'
-          }    
+          }
         })
-       
+
         data.forEach((d, i) =>{
           d[selectedTab] = +d[selectedTab]
           if (d[selectedTab] >= 0 && d[selectedTab] < 100 || d[selectedTab] === ''){
@@ -96,9 +96,9 @@ class App extends React.Component {
             d.investments_range = '50000-100000'
           } else {
             d.investments_range = '> 100000'
-          }    
+          }
         })
-      
+
         // console.log(data, "data with ranges added")
         data.forEach((e,i) => { e.u_id = (i+1) });
 
@@ -174,7 +174,7 @@ class App extends React.Component {
     let arr_of_values = [];
     // console.log(group)
     for (let value in group){
-        
+
         arr_of_values.push(value)
     }
     // console.log(arr_of_values,"arr_of_values");
@@ -254,7 +254,7 @@ class App extends React.Component {
     na = arr.findIndex(x => x.name === "Not available" )
     nai = arr.splice(na,1);
     if(filter.propName === "year"){
-       
+
       console.log(nai)
       arr.sort((a,b) => {
         console.log(a.value,b.value,a.value>b.value)
@@ -262,13 +262,11 @@ class App extends React.Component {
           return 1
         if (a.value < b.value)
           return -1
-        else  
-          return 0    
+        else
+          return 0
 
       })
       arr.reverse()
-      
-      console.log(arr)  
     }
     else if(filter.propName === "type_of_land"){
       arr.forEach((e,i) => {
@@ -276,14 +274,14 @@ class App extends React.Component {
           case "Private":
             e.index = 1
             break;
-          case "Common":  
+          case "Common":
             e.index = 2
             break
           case "Both":
             e.index = 3
             break
           default:
-            e.index = 4    
+            e.index = 4
         }
 
       })
@@ -301,7 +299,7 @@ class App extends React.Component {
         } else {
           return 1;
         }
-      }); 
+      });
     }
     arr.push(nai[0])
     return arr; // returns array

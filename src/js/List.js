@@ -71,7 +71,6 @@ class ListCards extends React.Component {
         year = (card.year === '') ? 'Not known' : card.year;
         return(
           <div
-            key={`${card.state}_i_${card.year}`}
             id={`protograph-grid-card-${card.state}-${card.year}`}
             data-viewcast_id={card.view_cast_id}
             className={`protograph-grid-card protograph-trigger-modal ${class_name}`}

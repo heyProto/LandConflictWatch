@@ -95,7 +95,7 @@ class MapsCard extends React.Component {
     if (selectedTab === 'no_of_people_affected'){
       legend_name = ['< 500', '500-2000', '2000-5000', '5000-20000', '20000-100000', '> 100000']
       map_legends = legend_name.map((d, i) => {
-        return(          
+        return(
           <g className="protograph-map-legend" transform={`translate(15,${ry[i]})`}>
             <circle className="protograph-map-legend-color-circle" r={r[i]} fill={'#FAA10C'}></circle>
             <text className="protograph-map-legend-text" transform={`translate(20,3)`}>{d}</text>
@@ -127,7 +127,7 @@ class MapsCard extends React.Component {
         </div>
       )
     } else if (selectedTab === 'investments') {
-      legend_name = ['< 100', '100-1000', '1000-20000', '20000-50000', '50000-100000', '> 100000'] 
+      legend_name = ['< 100', '100-1000', '1000-20000', '20000-50000', '50000-100000', '> 100000']
       map_legends = legend_name.map((d, i) => {
         return(
           <g className="protograph-map-legend" transform={`translate(15,${ry[i]})`}>

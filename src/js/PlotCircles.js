@@ -3,7 +3,7 @@ import Util from '../js/utility';
 import { scaleLinear as d3ScaleLinear, scaleOrdinal as d3ScaleOrdinal } from 'd3-scale';
 import { max as d3Max, min as d3Min } from 'd3-array';
 
-class PlotCircles extends React.Component { 
+class PlotCircles extends React.Component {
   render() {
     if (this.props.dataJSON === undefined) {
       return(<div></div>)
@@ -24,23 +24,21 @@ class PlotCircles extends React.Component {
           .range([4, 6, 8, 10, 12, 14]);
       }
 
-      // console.log(selectedTab);
-
       if(selectedTab === "no_of_conflicts"){
         fillColorScale = d3ScaleOrdinal()
           .domain(["Industry", "Infrastructure", "Land Use", "Mining", "Conservation/Forestry", "Power"])
           .range(['#1570da','#d0021b','#faa516','#000000','#59ab00','#bd10e0']);
       }
-      
+
 
       const circles = this.props.dataJSON.map((point, i) => {
         let radius,fillColor;
         if (selectedTab === 'no_of_conflicts'){
           radius = 4
-          if(point["type_of_industry"])
-            fillColor = fillColorScale(point["type_of_industry"])
-          else  
-            fillColor = defaultCircleColor  
+          if(point["industry"])
+            fillColor = fillColorScale(point["industry"])
+          else
+            fillColor = defaultCircleColor
         } else {
           radius = radiusScale(+point[selectedTab])
         }
@@ -50,9 +48,9 @@ class PlotCircles extends React.Component {
         return(
           <circle id="map_circles"
             className={`map-circles circle-${point.district}-${point.state}`}
-            key={i} 
-            cx={this.props.projection([point.longitude, point.latitude])[0]} 
-            cy={this.props.projection([point.longitude, point.latitude])[1]} 
+            key={i}
+            cx={this.props.projection([point.longitude, point.latitude])[0]}
+            cy={this.props.projection([point.longitude, point.latitude])[1]}
             r={radius}
             opacity={selectedTab === 'no_of_conflicts' ? 1 : 0.6}
             fill={fillColor}>
@@ -68,4 +66,4 @@ class PlotCircles extends React.Component {
 
 export default PlotCircles;
 // r={radiusScale(point.no_of_people_affected)}
- // r={4 * Math.sqrt(point[selectedTab] / Math.PI)} 
+ // r={4 * Math.sqrt(point[selectedTab] / Math.PI)}
