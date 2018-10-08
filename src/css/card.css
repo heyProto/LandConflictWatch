@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Bitter|Cabin');
+body {
+    min-width: initial !important;
+}
+
+a {
+    background: 0 0;
+    text-decoration: none;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.protograph-card {
+    position: relative;
+    overflow: hidden;
+    letter-spacing: normal;
+    box-sizing: border-box;
+}
+
+.protograph-col4-mode {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.protograph-col7-mode {
+    width: 1260px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/*===== Cover css =====*/
+
+.col-16-cover-area {
+    height: 430px;
+    width: 1260px;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.background-image {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.col-16-cover-area .color-overlay {
+    height: 430px;
+    width: 1260px;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    background: rgba(207, 162, 16, 0.8);
+}
+
+.page-title {
+    font-family: "bitter";
+    font-weight: bold;
+    color: #1F1800;
+    font-size: 32px;
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+}
+
+.selected-tab-content {
+    width: 540px;
+    display: inline-block;
+    position: absolute;
+    left: 330px;
+    top: 64px;
+}
+
+.content-title {
+    font-family: "cabin";
+    font-weight: bold;
+    display: inline-block;
+    font-size: 32px;
+    color: #1F1800;
+    width: 100%;
+}
+
+.content-title img {
+    margin-left: 24px;
+    height: 24px;
+}
+
+.display-value {
+    font-family: "cabin";
+    font-weight: bold;
+    margin-top: 35px;
+    margin-bottom: 40px;
+    display: inline-block;
+    font-size: 72px;
+    color: #1F1800;
+    width: 100%;
+}
+
+p {
+    font-family: "cabin";
+    color: #1F1800;
+    line-height: 21px;
+    font-size: 14px;
+}
+
+.vertical-tabs {
+    width: 300px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+a.tab-links {
+    text-decoration: none;
+}
+
+.single-tab {
+    height: 107px;
+    width: 100%;
+    background: transparent;
+    border-bottom: 1px solid #00000040;
+    padding: 19px 24px;
+    font-family: "cabin";
+    color: rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.tab-value {
+    font-size: 32px;
+    line-height: 56px;
+}
+
+.tab-links:last-child .single-tab {
+    border-bottom: 0px;
+    height: 109px;
+}
+
+.single-tab.active {
+    background: #1F1800;
+    color: #F7C513;
+}
+
+.single-tab .tab-value img {
+    float: right;
+    margin-top: 16px;
+    opacity: 0;
+}
+
+.single-tab.active .tab-value img {
+    float: right;
+    margin-top: 16px;
+    opacity: 1;
+}
+
+.col-4-cover-area{
+    height: 430px;
+    width: 300px;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.col-4-cover-area .color-overlay {
+    height: 430px;
+    width: 300px;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    background: rgba(207, 162, 16, 0.8);
+}
+
+.col-4-cover-area .single-tab{
+    height: 80px;
+    padding: 10px 20px;
+}
+
+.col-4-cover-area .single-tab .tab-value{
+    line-height: 48px
+}
+
+.col-4-cover-area .tab-links:last-child .single-tab {
+    height: 80px;
+}
+
+/* Note the above height and width are just samples. Change it as per the usecase. */

@@ -3,8 +3,6 @@ import {groupBy} from './utility.js';
 
 export default class Filter extends React.Component {
 
-  
-
   constructor(props) {
     super(props);
     let year_not,year_index,years,land_type;
@@ -15,9 +13,6 @@ export default class Filter extends React.Component {
       return e;
     });
     filterJSON[0].is_active = true; 
-
-    
-
 
     var stateVars = {
       moveIn: undefined,
@@ -323,7 +318,7 @@ export default class Filter extends React.Component {
     if (filterParams.length === 0 && filteredData.length <= 0) {
       filteredData = this.state.dataJSON;
     }
-    // console.log(filteredData.length)
+    // console.log(filteredData)
     this.setState({
       filteredData: filteredData
     }, this.onChange);
@@ -396,7 +391,7 @@ export default class Filter extends React.Component {
   }
 
   renderFilterItems(filters, subItems) {
-    // console.log(filters)
+    // console.log(filters, subItems)
     return (
       <div className={`${!subItems ? 'protograph-filter-items-container' : 'protograph-filter-sub-items-container' }`} >
         <div className= {`${!subItems ? 'protograph-filter-list-area' : '' }`}>

@@ -46,7 +46,7 @@ class Voronoi extends React.Component {
           className={`voronoi-map protograph-trigger-modal`}
           data-iframe_url={d.data.iframe_url}
           data-district_code={d.data.district}
-          id={d.data.district}
+          id={d.data.view_cast_id}
           onClick={this.props.showModal}
           onMouseMove={(e) => this.handleMouseOver(e, d.data, name)}
           onTouchStart={(e) => this.handleMouseOver(e, d.data, name)}

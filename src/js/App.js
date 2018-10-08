@@ -23,7 +23,10 @@ class App extends React.Component {
       card: undefined,
       mode: window.innerWidth <= 500 ? "col4" : "col7",
       filterConfigurationJSON: this.props.filterConfigurationJSON,
-      obj: {}
+      obj: {},
+      currentTab: '',
+      tabJSON: {},
+      mappingJSON: {}
     };
     this.ListReference = undefined;
     this.showModal = this.showModal.bind(this);
@@ -32,9 +35,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    let mappingJSON_URL = 'https://cdn.protograph.pykih.com/55825b09931bee16055a/mapping.json';
+    let tabJSON_URL = 'https://landconflictwatch.pro.to/e4a37dc3ea5258b355e78287/data.json'
     const { dataURL, topoURL, filterConfigsURL } = this.props;
-    axios.all([axios.get(dataURL), axios.get(topoURL)]).then(
-      axios.spread((card, topo) => {
+    axios.all([axios.get(dataURL), axios.get(topoURL), axios.get(tabJSON_URL)]).then(
+      axios.spread((card, topo, tab) => {
         let data,
           filters,
           filterJSON,
@@ -43,7 +48,7 @@ class App extends React.Component {
           selectedTab = this.props.chartOptions.selectedTab;
 
         data = card.data;
-        // console.log(data)
+
         data.forEach((d, i) => {
           d[selectedTab] = +d[selectedTab];
           if (
@@ -135,15 +140,17 @@ class App extends React.Component {
             filters: filters
           }
         ];
-
+          
         this.setState(
           {
             dataJSON: data,
             filteredDataJSON: data,
             topoJSON: topo.data,
             filterJSON: filterJSON,
-            keyValue: keyValue
+            keyValue: keyValue,
+            tabJSON: tab.data
           },
+
           e => {
             this.initF3BTWShareLinks();
             var that = this;
@@ -188,14 +195,10 @@ class App extends React.Component {
     window.setTimeout(
       function() {
         if (document.location.href.match(/#/g) !== null) {
-          let district = document.location.href.substring(
+          let viewCastID = document.location.href.substring(
             document.location.href.lastIndexOf("#") + 1
           );
-          district = district.replace(/%20/g, " ");
-          let data = this.state.dataJSON.filter((k, i) => {
-            return k.district === district;
-          })[0];
-          console.log(data.iframe_url, "data");
+          let data = this.state.dataJSON.find(i => i.view_cast_id === viewCastID)
           this.setState({
             iframeURL: data.iframe_url,
             showModal: true
@@ -372,9 +375,32 @@ class App extends React.Component {
       }
     ];
 
+    let conflictSum = filteredData.length;
+    let peopleAffected = 0, investment = 0, landAffected = 0;
+    filteredData.forEach(k => {
+      if (k.no_of_people_affected === "") {
+        k.no_of_people_affected = "0"
+      }
+      if (k.investments === "") {
+        k.investments = "0"
+      }
+      if (k.land_area_affected === "") {
+        k.land_area_affected = "0"
+      }
+      peopleAffected += parseInt(k.no_of_people_affected);
+      investment += parseInt(k.investments);
+      landAffected += parseInt(k.land_area_affected);})
+    let tabs = this.state.tabJSON
+    tabs.data.tabs[0].number = conflictSum.toString();
+    tabs.data.tabs[1].number = peopleAffected.toString();
+    tabs.data.tabs[2].number = landAffected.toString();
+    tabs.data.tabs[3].number = investment.toString();
+
+
     this.setState({
       filteredDataJSON: filteredData,
-      filterJSON: filterJSON
+      filterJSON: filterJSON,
+      tabJSON: tabs
     });
   }
 
@@ -390,36 +416,34 @@ class App extends React.Component {
         });
       });
     }
-    let district = e.target
+
+    let viewCastID = e.target
         .closest(".protograph-trigger-modal")
-        .getAttribute("data-district_code"),
-      data = this.state.dataJSON.filter((k, i) => {
-        return k.district === district;
-      })[0];
-    // console.log(data.iframe_url, "data")
+        .getAttribute("id"),
+      data = this.state.dataJSON.find(i => i.view_cast_id === viewCastID)
     this.setState({
       iframeURL: data.iframe_url,
       showModal: true
     });
 
-    //change url in address bar based on the district clicked
+    //change url in address bar based on the point clicked
     if (typeof history.pushState != "undefined") {
       let url;
       let currentURL = document.location.href;
       if (currentURL.indexOf("#") !== -1) {
-        url = currentURL.substring(0, currentURL.indexOf("#")) + "#" + district;
+        url = currentURL.substring(0, currentURL.indexOf("#")) + "#" + viewCastID;
       } else if (currentURL[currentURL.length - 1] == "/") {
         url =
           currentURL.substring(currentURL.lastIndexOf("#" + 1)) +
           "#" +
-          district;
+          viewCastID;
       } else {
         url =
           currentURL.substring(currentURL.lastIndexOf("#" + 1)) +
           "/#" +
-          district;
+          viewCastID;
       }
-      let obj = { Title: district, Url: url };
+      let obj = { Title: viewCastID, Url: url };
       history.pushState(obj, obj.Title, obj.Url);
     } else {
       alert("Browser does not support HTML5.");
@@ -427,7 +451,7 @@ class App extends React.Component {
   }
 
   closeModal() {
-    //remove district name from url after modal is closed
+    //remove view cast id from url after modal is closed
     let currentURL = document.location.href;
     if (typeof history.pushState != "undefined") {
       let url = currentURL.substring(0, currentURL.indexOf("#"));
@@ -471,6 +495,149 @@ class App extends React.Component {
           eventLabel: label
         });
       });
+    }
+  }
+
+  selectTab(){
+    return 1
+  }
+
+  handleTabClick(tab){
+    this.setState({
+      currentTab: tab
+    });
+  }
+
+  renderTabs(tabs){
+    let tabNames;
+    let tabClass;
+    tabNames = tabs.map((tab,i)=>{
+      let currTab = this.state.currentTab === '' ? this.selectTab() : this.state.currentTab;
+      tabClass = (i+1 === currTab)? "cover-single-tab active":"cover-single-tab";
+      return(
+        <a key={i.toString()} className="tab-links" onClick={()=>this.handleTabClick(i+1)}>
+          <div className={tabClass}>
+            {tab.title}
+            <div className="tab-value">
+              {this.formatNumber(tab.number)}
+              <img src={tab.tabIcon} height="24px"/>
+            </div>
+          </div>
+        </a>
+      )
+    })
+    return tabNames;
+  }
+
+  formatNumber(num){
+    let rev = "";
+    let frNumRev="";
+    let frNum = '';
+    let remain;
+    for (var i = num.length - 1; i >= 0; i--) {
+        rev += num[i];
+    }
+    remain = rev;
+    frNum = remain.slice(0,3);
+    if(num.length>3){
+      frNum += ',';
+      remain = remain.slice(3);
+      while(remain.length>0){
+        if(remain.length<=2){
+          frNum += remain;
+          break;
+        }
+        else{
+          frNum += remain.slice(0,2)+',';
+          remain = remain.slice(2);
+        }
+      }
+    }
+    for (var i = frNum.length - 1; i >= 0; i--) {
+      frNumRev += frNum[i];
+    }
+    return frNumRev;
+  }
+
+  renderTabContent(tabs,tabNo){
+    let tabContent;
+    let display;
+    tabContent = tabs.map((tab,i)=>{
+      display = (tabNo === i+1)? "":"none";
+      return(
+        <div className="selected-tab-content" style={{display:display}}>
+          <div className="content-title">
+            {tab.title} <img src={tab.desIcon}/>
+          </div>
+          <div className="display-value">
+            {this.formatNumber(tab.number)}
+          </div>
+          <p>{tab.description}</p>
+        </div>
+      )
+    })
+    return tabContent;
+  }
+
+
+  renderCover16() {
+    if (this.state.fetchingData ){
+      return(<div>Loading</div>)
+    } else {
+      let data = this.state.tabJSON.data,
+        bg_image = data.cover_image,
+        title = data.title,
+        tabs = data.tabs,
+        currTab = this.state.currentTab === '' ? this.selectTab() : this.state.currentTab;
+        console.log(currTab, "currTab")
+      return (
+        <div id="protograph_div" className="protograph-col7-mode">
+          <div className="col-16-cover-area">
+            <div className="background-image">
+              <img src={bg_image}/>
+            </div>
+            <div className="color-overlay">
+              <div className="page-title">
+                Data
+              </div>
+              {this.renderTabContent(data.tabs, currTab)}
+              <div className="vertical-tabs">
+                {this.renderTabs(data.tabs)}
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  renderCover4() {
+    if (this.state.fetchingData) {
+      return (<div>Loading</div>)
+    } else {
+      let data = this.state.tabJSON.data,
+        bg_image = data.cover_image,
+        title = data.title,
+        tabs = data.tabs,
+        currTab = this.state.currentTab === '' ? this.selectTab() : this.state.currentTab;
+      return (
+        <div id="protograph_div" className="protograph-col4-mode" style={{display: 'flex'}}>
+          <div className="col-4-cover-area">
+            <div className="background-image">
+              <img src={bg_image}/>
+            </div>
+            <div className="color-overlay">
+              <div className="page-title">
+                Data
+              </div>
+              {this.renderTabContent(data.tabs, currTab)}
+              <div className="vertical-tabs">
+                {this.renderTabs(data.tabs)}
+              </div>
+            </div>
+          </div>
+        </div>
+      )
     }
   }
 
@@ -524,9 +691,9 @@ class App extends React.Component {
       return this.renderLoader();
     } else {
       $(".social-share-icons").css("display", "block");
-      // console.log(this.state.filteredDataJSON, "state.filteredDataJSON")
       return (
         <div className="banner-area">
+        {(this.state.mode === 'col4' ? this.renderCover4() : this.renderCover16())}
           <div className="proto-col col-4 filter-col protograph-filter-area">
             <div className="summary">
               <div className="article-share-icons">

@@ -57,12 +57,12 @@ ProtoGraph.initPage = function () {
     });
   }
 
-  if (page && streams['16c_Hero']) {
+  if (page && streams['16c_Hero'] && document.getElementById("cover_container")) {
     Util.getJSON(streams['16c_Hero'].url, function (err, data) {
       if (err != null) {
         console.error("Error fetching 16c stream", err);
       } else {
-        let cover_container = document.getElementById("col_16_cover_container"),
+        let cover_container = document.getElementById("cover_container"),
           mode_for_cover = (mode === 'mobile') ? "col4" : "col16";
 
         if (data.length > 0) {
@@ -84,7 +84,7 @@ ProtoGraph.initPage = function () {
             }, 0)
           })
         } else {
-          $('#col_16_cover_container').append(`
+          $('#cover_container').append(`
             <div class="fixed-cover-block fixed-cover-block-small" id="proto_col_16_cover_blank">
               ${page.cover_image_url || page.cover_image_url_7_column ? '<div class="proto-black-background"></div>' : ''}
               <h1 class="page-title bottom-pull-div">
@@ -106,7 +106,7 @@ ProtoGraph.initPage = function () {
       }
     });
   } else {
-    $('#col_16_cover_container').append(`
+    $('#cover_container').append(`
       <div class="fixed-cover-block fixed-cover-block-small" id="proto_col_16_cover_blank">
         ${page.cover_image_url || page.cover_image_url_7_column ? '<div class="proto-black-background"></div>' : ''}
         <h1 class="page-title bottom-pull-div">
